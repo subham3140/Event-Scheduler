@@ -1,3 +1,16 @@
+
+
+.nvbar{
+  display: flex;
+  width: 100%;
+  justify-content:space-between;
+}
+
+.all_ev, .all_gr{
+  margin-left: 20px;
+}
+
+
 .action{
   display: flex;
   justify-content: space-around;

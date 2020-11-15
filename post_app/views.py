@@ -17,7 +17,9 @@ def PostView(request, pk):
     'event' : event,
     'posts' : posts,
     'events' : Member_or_Not(request.user),
-    'list' : Group_Mem(request.user)
+    'list' : Group_Mem(request.user),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request, 'post_app/post.html', context)
 
@@ -27,7 +29,9 @@ def CreatePost(request, pk):
     context = {
     'events' : Member_or_Not(request.user),
     'list' : Group_Mem(request.user),
-    'form' : form
+    'form' : form,
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     if request.method == "POST":
         form  = PostForm(request.POST)
@@ -53,11 +57,13 @@ def UpdatePost(request, pk):
     # // Now here event_members are a queryset so it is iterable so each element is a EventMembers objects //
     # // thus we can check if the user is a member of this event or not
     context = {
-          'events' : Member_or_Not(request.user),
-          'list' : Group_Mem(request.user),
-          'event' : event,
-          'posts' : posts,
-          'form' : form
+    'events' : Member_or_Not(request.user),
+    'list' : Group_Mem(request.user),
+    'event' : event,
+    'posts' : posts,
+    'form' : form,
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
         }
     if request.user in [each_obj.member for each_obj in event_members]:
         if request.method == "POST":
@@ -79,10 +85,12 @@ def DeletePost(request, pk):
     posts = Post.objects.filter(event = event)
     event_members = EventMembers.objects.filter(event = event)
     context = {
-          'event' : event,
-          'posts' : posts,
-          'events' : Member_or_Not(request.user),
-          'list' : Group_Mem(request.user)
+        'event' : event,
+        'posts' : posts,
+        'events' : Member_or_Not(request.user),
+        'list' : Group_Mem(request.user),
+        'all_ev' : AllEvents("give"),
+        'all_gr' : AllGroups("give")
         }
     if request.user in [each_obj.member for each_obj in event_members]:
         post.delete()

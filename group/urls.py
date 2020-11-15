@@ -4,7 +4,6 @@ from . import views
 app_name = 'group'
 
 urlpatterns = [
-     path('', views.GroupList, name='grouplist'),
      path('groupdetail/<int:pk>/', views.GroupDetail, name = 'groupdetail'),
      path('creategroup/', views.CreateGroup, name ='creategroup'),
      path('updategroup/<int:pk>/', views.UpdateGroup, name = 'updategroup'),

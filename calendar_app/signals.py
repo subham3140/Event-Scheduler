@@ -10,9 +10,3 @@ def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user_name = instance)
     print(instance)
-
-
-@receiver(post_save, sender = Group)
-def create_groupmember(sender, instance,**kwargs):
-    GroupMembers.objects.create(group = instance, member_name = instance.creator)
-    print(instance)

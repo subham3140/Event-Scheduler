@@ -17,7 +17,9 @@ def GroupDetail(request, pk):
     'group' : group,
     'events' : Member_or_Not(request.user),
     'list' : Group_Mem(request.user),
-    'members' : GroupMembers.objects.filter(group = group)
+    'members' : GroupMembers.objects.filter(group = group),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request, 'group/groupdetail.html', context)
 
@@ -31,37 +33,42 @@ def CreateGroup(request):
             creator = request.user
             group = Group.objects.create(group_name = group_name, creator = creator, about = about)
             messages.success(request, "Your group has created successfully!")
+            GroupMembers.objects.create(group = group, member_name = request.user)
             return render(request, 'group/groupdetail.html', {'group' : group,
                                                               'event' : Member_or_Not(request.user),
                                                               'list' : Group_Mem(request.user),
-                                                              'members' : GroupMembers.objects.filter(group = group)})
+                                                              'members' : GroupMembers.objects.filter(group = group),
+                                                              'all_ev' : AllEvents("give"),
+                                                              'all_gr' : AllGroups("give")})
     context = {
         'form' : form,
         'events' : Member_or_Not(request.user),
         'list' : Group_Mem(request.user),
+        'all_ev' : AllEvents("give"),
+        'all_gr' : AllGroups("give")
         }
     return render(request, 'group/creategroup.html', context)
 
 def UpdateGroup(request, pk):
     group = get_object_or_404(Group, pk = pk)
     form = GroupForm(instance = group)
-    context = {
-        'form' : form,
-        'group' : group,
-        'events' : Member_or_Not(request.user),
-        'list' : Group_Mem(request.user),
-        'members' : GroupMembers.objects.filter(group = group)
-        }
     if request.user == group.creator:
         if request.method == "POST":
             form = GroupForm(request.POST, instance = group)
             if form.is_valid():
                 form.save()
                 messages.success(request, "Your group has updated successfully!")
-                return render(request, 'group/groupdetail.html', context)
+                return redirect(group)
     else:
         messages.warning(request, "You can't update this group!")
-        return render(request, 'group/groupdetail.html', context)
+        return redirect('/')
+    context = {
+        'form' : form,
+        'events' : Member_or_Not(request.user),
+        'list' : Group_Mem(request.user),
+        'all_ev' : AllEvents("give"),
+        'all_gr' : AllGroups("give")
+        }
     return render(request, 'group/updategroup.html', context)
 
 
@@ -91,7 +98,9 @@ def JoinGroup(request, pk):
     'group' : group,
     'members' : GroupMembers.objects.filter(group = group),
     'events' : Member_or_Not(request.user),
-    'list' : Group_Mem(request.user)
+    'list' : Group_Mem(request.user),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request, 'group/groupdetail.html', context)
 
@@ -109,6 +118,8 @@ def LeaveGroup(request, pk):
     'group' : group,
     'members' : GroupMembers.objects.filter(group = group),
     'events' : Member_or_Not(request.user),
-    'list' : Group_Mem(request.user)
+    'list' : Group_Mem(request.user),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request, "group/groupdetail.html", context)

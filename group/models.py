@@ -15,6 +15,9 @@ class Group(models.Model):
         self.slug = self.group_name
         super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse("group:groupdetail", kwargs={"pk" : self.pk})
+
     def __str__(self):
         return self.group_name
 

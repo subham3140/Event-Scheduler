@@ -12,6 +12,12 @@ from group.models import *
 from post_app.models import Post
 
 
+def AllEvents(*args):
+    return Event.objects.all()
+
+def AllGroups(*args):
+    return Group.objects.all()
+
 def VisitEvent(request, pk):
     event_details = Event.objects.get(id = pk)
     all_posts = Post.objects.filter(event = event_details)
@@ -48,7 +54,9 @@ def Home(request):
     'events' : Member_or_Not(request.user),
     'list' : Group_Mem(request.user),
     'visit_events' : Event.objects.all(),
-    'can_see_event' : "go"
+    'can_see_event' : "go",
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request, 'home.html', context)
 
@@ -60,7 +68,9 @@ def Index(request):
     context = {
        'events' : Member_or_Not(request.user),
        'list' : Group_Mem(request.user),
-       'visit_events' : Event.objects.all()
+       'visit_events' : Event.objects.all(),
+       'all_ev' : AllEvents("give"),
+       'all_gr' : AllGroups("give")
        }
     return render(request, 'guidance.html', context)
 
@@ -71,7 +81,9 @@ def ProfileinfoView(request):
     context = {
     'profile' : Profile.objects.get(user_name = request.user),
     'events' : Member_or_Not(request.user),
-    'list' : Group_Mem(request.user)
+    'list' : Group_Mem(request.user),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request, 'profiledetail.html', context)
 
@@ -89,6 +101,8 @@ def UpdateProfile(request):
     context = {
              'form' : profileform,
              'events' : Member_or_Not(request.user),
-             'list' : Group_Mem(request.user)
+             'list' : Group_Mem(request.user),
+             'all_ev' : AllEvents("give"),
+             'all_gr' : AllGroups("give")
     }
     return render(request, 'updateprofile.html', context)

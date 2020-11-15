@@ -18,6 +18,8 @@ from calendar_pro.views import *
 import calendar
 # Create your views here.
 
+
+
 def current_date(current):
      if current:
          year, month = current.split('-')
@@ -56,6 +58,8 @@ def get_context_data(request):
     'list' : Group_Mem(request.user),
     'today' : datetime.today(),
     'current_month_events' : current_month_events,
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return content
 
@@ -90,7 +94,9 @@ def CreateEvent(request):
     context = {
     'form' : form,
     'events' : Member_or_Not(request.user),
-    'list' : Group_Mem(request.user)
+    'list' : Group_Mem(request.user),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request, 'calendar_app/event_form.html',context)
 
@@ -98,10 +104,12 @@ def EventInfo(request,pk):
     event = get_object_or_404(Event, pk = pk)
     members = EventMembers.objects.filter(event = event)
     context = {
-       'event' : event,
-       'members' : members,
-       'events' : Member_or_Not(request.user),
-       'list' : Group_Mem(request.user)
+    'event' : event,
+    'members' : members,
+    'events' : Member_or_Not(request.user),
+    'list' : Group_Mem(request.user),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request, 'calendar_app/event_detail.html', context)
 
@@ -119,10 +127,12 @@ def UpdateEvent(request, pk):
     else:
         messages.warning(request, f"You are not the creator of : {event.title} event so you can't update!")
     context = {
-      'event' : event,
-      'members' : EventMembers.objects.filter(event = event),
-      'events' : Member_or_Not(request.user),
-      'list' : Group_Mem(request.user)
+    'event' : event,
+    'members' : EventMembers.objects.filter(event = event),
+    'events' : Member_or_Not(request.user),
+    'list' : Group_Mem(request.user),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request, 'calendar_app/event_detail.html', context)
 
@@ -155,7 +165,9 @@ def JoinEvent(request, pk):
     'event' : event,
     'members' : EventMembers.objects.filter(event = event),
     'events' : Member_or_Not(request.user),
-    'list' : Group_Mem(request.user)
+    'list' : Group_Mem(request.user),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request,'calendar_app/event_detail.html',context)
 
@@ -177,7 +189,9 @@ def LeaveEvent(request, pk):
     'event' : event,
     'members' : EventMembers.objects.filter(event = event),
     'events' : Member_or_Not(request.user),
-    'list' : Group_Mem(request.user)
+    'list' : Group_Mem(request.user),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request, 'calendar_app/event_detail.html', context)
 
@@ -195,7 +209,9 @@ def Kick_out(request,event_pk,pk):
     'event' : get_object_or_404(Event, pk = event_pk),
     'members' : EventMembers.objects.filter(event_id=event_pk),
     'events' : Member_or_Not(request.user),
-    'list' : Group_Mem(request.user)
+    'list' : Group_Mem(request.user),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request,'calendar_app/event_detail.html', context)
 
@@ -217,7 +233,9 @@ def Memberprofile(request, pk):
     'memberevents' : active_events,
     'instant_user' : instant_user,
     'events' : Member_or_Not(request.user),
-    'list' : Group_Mem(request.user)
+    'list' : Group_Mem(request.user),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
     }
     return render(request, 'calendar_app/memberprofile.html', context)
 

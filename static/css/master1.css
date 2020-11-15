@@ -1,9 +1,12 @@
 
+.nvbar{
+  display: flex;
+  width: 100%;
+  justify-content:space-between;
 
-
-
-.event1,.event2{
-font-family: 'Dancing Script', cursive;
+}
+.all_ev, .all_gr{
+  margin-left: 20px;
 }
 
 .j1 h3{

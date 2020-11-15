@@ -139,8 +139,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
  # For the safety i am using the environment variable
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD =  os.environ.get('EMAIL_HOST_PASS')
+EMAIL_HOST_USER = 'subham3140@gmail.com'
+EMAIL_HOST_PASSWORD =  'lyuicliwfeqllbvx'
 EMAIL_USE_TLS = True
 EMAIL_USE_SST = False
 EMAIL_POST = 587
