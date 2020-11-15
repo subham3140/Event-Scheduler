@@ -1,6 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
+from datetime import datetime
 
 # Create your models here.
 
@@ -10,7 +11,7 @@ class Event(models.Model):
     about = models.TextField()
     start_at = models.DateTimeField()
     end_at = models.DateTimeField()
-    created_at = models.DateTimeField(auto_now_add = True)
+    created_at = models.DateTimeField(default = datetime.now)
 
     def __str__(self):
         return f'{self.title} conducted by {self.creator}'

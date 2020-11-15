@@ -18,7 +18,7 @@ class EventForm(ModelForm):
       'start_at': DateInput(format='%Y-%m-%dT%H:%M', attrs={'type' : 'datetime-local'}),
       'end_at': DateInput(format='%Y-%m-%dT%H:%M', attrs={'type' : 'datetime-local'})
     }
-    exclude = ['creator']
+    exclude = ['creator', 'created_at']
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
