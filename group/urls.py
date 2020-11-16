@@ -10,4 +10,5 @@ urlpatterns = [
      path('deletegroup/<int:pk>/', views.DeleteGroup, name = 'deletegroup'),
      path('joingroup/<int:pk>/', views.JoinGroup, name = 'joingroup'),
      path('leavegroup/<int:pk>/', views.LeaveGroup, name = 'leavegroup'),
+     path('kick_out/<int:group_pk>/<int:pk>/', views.Kick_out, name = 'kick_out')
 ]
