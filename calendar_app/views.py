@@ -196,18 +196,20 @@ def LeaveEvent(request, pk):
     return render(request, 'calendar_app/event_detail.html', context)
 
 def Kick_out(request,event_pk,pk):
-    if Event.objects.get(id=event_pk).creator == request.user:
-        messages.warning(request, "Since you are the creator so you can't kick Yourself out, instead you have to delete this event!")
-    elif Event.objects.get(id = event_pk).creator != request.user:
-          messages.warning(request, "You are not the creator of this event so you can't kick_out the member")
+    event = Event.objects.get(id=event_pk)
+    if event.creator.username == request.user.username:
+        if request.user.username == User.objects.get(id=pk).username:
+            messages.warning(request, "Since you are the creator so you can't kick Yourself out, instead you have to delete this event!")
+        else:
+            kick_me = EventMembers.objects.filter(event__id = event_pk, member__id = pk )
+            kicked_to = kick_me[0].member.username
+            kick_me.delete()
+            messages.warning(request, f"You have successfully kicked {kicked_to}")
     else:
-        kick_me = EventMembers.objects.filter(event_id = event_pk, member_id = pk )
-        kicked_to = kick_me[0].member.username
-        kick_me.delete()
-        messages.warning(request, f"You have successfully kicked {kicked_to}")
+        messages.warning(request, "You are not the creator of this event so you can't kick_out the member")
     context = {
     'event' : get_object_or_404(Event, pk = event_pk),
-    'members' : EventMembers.objects.filter(event_id=event_pk),
+    'members' : EventMembers.objects.filter(event__id=event_pk),
     'events' : Member_or_Not(request.user),
     'list' : Group_Mem(request.user),
     'all_ev' : AllEvents("give"),
