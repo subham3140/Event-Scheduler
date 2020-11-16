@@ -123,3 +123,26 @@ def LeaveGroup(request, pk):
     'all_gr' : AllGroups("give")
     }
     return render(request, "group/groupdetail.html", context)
+
+def Kick_out(request,group_pk,pk):
+    group = Group.objects.get(id=group_pk)
+    if group.creator.username == request.user.username:
+        if request.user.username == User.objects.get(id=pk).username:
+            messages.warning(request, "Since you are the creator so you can't kick Yourself out, instead you have to delete this event!")
+        else:
+            kick_me = GroupMembers.objects.filter(group__id = group_pk, member_name__id = pk )
+            kicked_to = kick_me[0].member_name.username
+            kick_me.delete()
+            messages.warning(request, f"You have successfully kicked {kicked_to}")
+    else:
+        messages.warning(request, "You are not the creator of this event so you can't kick_out the member")
+    context = {
+    'group' : get_object_or_404(Group, pk = group_pk),
+    'members' : GroupMembers.objects.filter(group__id=group_pk),
+    'events' : Member_or_Not(request.user),
+    'list' : Group_Mem(request.user),
+    'all_ev' : AllEvents("give"),
+    'all_gr' : AllGroups("give")
+    }
+    return render(request,'group/groupdetail.html', context)
+
