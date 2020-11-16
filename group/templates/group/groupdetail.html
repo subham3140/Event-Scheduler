@@ -19,7 +19,7 @@
       {% for member in members %}
         <div class="kick_out">
             <li> <a href="{% url 'calendar_app:memberprofile' pk=member.member_name.id %}">{{ member }}</a></li>
-            <h6><a class="btn btn-info" href="{}"> Kick_out </a></h6>
+            <h6><a class="btn btn-info" href="{% url 'group:kick_out' group_pk=group.id pk=member.member_name.id %}"> Kick_out </a></h6>
         </div><br>
       {% endfor %}
     </div>
