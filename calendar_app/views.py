@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from calendar_app.models import Event, EventMembers, Profile
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from datetime import datetime,date, timedelta
 from django.contrib.auth.models import User
 from calendar import HTMLCalendar
