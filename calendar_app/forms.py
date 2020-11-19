@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from . import models
 from django import forms
-from django.forms import ModelForm , DateInput, TextInput
+from django.forms import ModelForm , DateInput
 
 User = get_user_model()
 
